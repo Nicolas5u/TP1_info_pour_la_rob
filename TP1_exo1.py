@@ -2,10 +2,8 @@ print("hello voici l'exo 1 du TP 1")
 
 def distance_robuste(mes1,mes2,mes3) :
     if (mes1 < mes2 < mes3 or mes3 < mes2 < mes1) :
-        print("la médiane est la deuxieme mesure")
-        if (not(0.5 * mes1 < mes2 < 1.5 * mes1) and not(0.5 * mes3 < mes2 < 1.5 * mes3)) :
-            print("les valeurs 1,3 sont absurde")
-            return -1
+        if (not(0.5 * mes1 < mes2 < 1.5 * mes1) and not(0.5 * mes3 < mes2 < 1.5 * mes3)) : #la médiane est la deuxieme mesure
+            return -1 #les valeurs 1,3 sont absurde
         elif (not(0.5 * mes3 < mes2 < 1.5 * mes3)) :
             print("la valeur 3 est absurde")
             return (mes1 + mes2)/2
