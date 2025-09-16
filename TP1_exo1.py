@@ -52,11 +52,11 @@ assert temps_trajet(0, 0, 6, 8, ’R’) == 5.0 # 10m à 2m/s = 5s
 assert temps_trajet(0, 0, 3, 4, ’S’) == 5.0 # 5m à 1m/s = 5s
 assert temps_trajet(0, 0, 0, 1, ’O’) == 2.0 # 1m à 0.5m/s = 2s"""
 
-def distance(a,b,c,d,type_terrain) :
+def distance(a,b,c,d) :
     return sqrt((d - a)**2 + (c - b)**2)
 
 def temps_trajet(a,b,c,d,type_terrain) : # estime le temps nécessaire pour un déplacement en tenant compte de la vitesse variable du robot selon le terrain.
-    dist = distance(a,b,c,d,type_terrain)
+    dist = distance(a,b,c,d)
     if(type_terrain == 'R') :
         return dist / 2.0
     if(type_terrain == 'H') :
