@@ -1,6 +1,6 @@
-<<<<<<< HEAD
-salut
-=======
+import TP_exo1
+import math
+
 class Position:
     def __init__(self, x=0, y=0):
         self.x=x
@@ -13,8 +13,10 @@ class Position:
     def afficher(self):
         print(f'les coord sont (x={self.x} ,y={self.y})')
 
-    def distance_vers(self, autrecoord):
-        d=((autrecoord.x-self.x)**2 + (autrecoord.y-self.y)**2)**0.5 #norme d=racine carré de ((x'-x)²+(y'-y)²)
+    def distance_vers(self, autre):
+        dx=autre.x - self.x
+        dy=autre.y - self.y
+        d=math.sqrt(dx**2 + dy**2)
         print(f'la distance est: {d}')
         return d
 
@@ -26,4 +28,4 @@ pos3 = pos1 + pos2
 pos3.afficher() # Position(x=3, y=4)
 
 assert pos1.distance_vers(pos2) == 5.0
->>>>>>> eb3049f (Exo2)
+
