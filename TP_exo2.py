@@ -28,4 +28,3 @@ pos3 = pos1 + pos2
 pos3.afficher() # Position(x=3, y=4)
 
 assert pos1.distance_vers(pos2) == 5.0
-
