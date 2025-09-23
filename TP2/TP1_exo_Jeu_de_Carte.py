@@ -1,1 +1,1 @@
-exo jeu de carte
+exo jeu de carte pour leo
