@@ -1,42 +1,36 @@
-form abc import ABC, abstractmethod
+from abc import ABC, abstractmethod
 import random
 
 
 class Cartes(ABC):
-
-    def appliquer(self, joueur):
-        pass
-        
-    def __init__(self, liste_carte):
-        self.liste_carte = []
-    
+    @abstractmethod
+   
     def initialise_et_melange_liste(liste_carte):
 
-    for i in range(30):
-        liste_carte.append(CarteNormale)
+        for i in range(30):
+            liste_carte.append(CarteNormale())
 
-    for i in range(6):
-        liste_carte.append(CarteBonus)
+        for i in range(6):
+            liste_carte.append(CarteBonus())
 
-    for i in range(5):
-        liste_carte.append(CarteMalus)
+        for i in range(5):
+            liste_carte.append(CarteMalus())
 
-    for i in range(15):
-        liste_carte.append(CarteChance)
+        for i in range(15):
+            liste_carte.append(CarteChance())
+        
+        random.shuffle(liste_carte) # Mélanger l'ordre des cartes
+
+        return liste_carte
     
-    random.shuffle(liste_carte) # Mélanger l'ordre des cartes
-
-    return liste_carte
-    
-def piocher(liste_carte):
+def piocher(liste_carte, joueur):
     carte_sortie = liste_carte.pop(0)
-    
+    print(f' {carte_sortie}')
+    effet=carte_sortie.valeur(joueur)
     return carte_sortie
 
 
 class CarteNormale(Cartes):
-
-    def __init__(self):
     
     def valeur(self, joueur):
         points = random.randint(1, 10)
@@ -46,16 +40,12 @@ class CarteNormale(Cartes):
 
 class CarteBonus(Cartes): #regle
     
-    def __init__(self):
-    
     def valeur(self, joueur):
         joueur.ajouter_score(joueur.score)
         return f'Carte Bonus+ {points} points'
 
 
 class CarteMalus(Cartes):
-    
-    def __init__(self):
     
     def valeur(self, joueur):
         points =-5
@@ -64,8 +54,6 @@ class CarteMalus(Cartes):
 
 
 class CarteChance(Cartes):
-    
-    def __init__(self):
     
     def valeur(self, joueur):
         points=random.randint(-5, 15)
@@ -86,16 +74,20 @@ class Joueur:
 
 
 
-if __name__='main':
+if __name__=="__main__":
 
-    j1=Joueur("j1")
-    j2=Joueur("j2")
-    int nb_tours
+    Cartes.liste_carte=[]
+    joueurs=[Joueur("léo"), Joueur("Nico")]
+    joueur_actif = 0
+    
+    Cartes.initialise_et_melange_liste(Cartes.liste_carte)
+    
     #nb_tours=input('Combien de tours ?')
     nb_tours=5
 
-    for i in range (0, nb_tours):
+    for i in range (1, nb_tours+1):
         print(f'tour numéro {i}')
-        for joueur in Joueur:
-            piocher(deck, joueur)
-            print(f'joueur {Joueur.nom} : {Joueur.score}')
+        for joueur in joueurs:
+            piocher(Cartes.liste_carte, joueur)
+            print(f'joueur {joueur.nom} : {joueur.score}')
+        
