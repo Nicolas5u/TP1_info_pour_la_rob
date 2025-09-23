@@ -20,7 +20,7 @@ class Cartes(ABC):
             liste_carte.append(CarteNormale())
         for _ in range(6):
             liste_carte.append(CarteBonus())
-        for _ in range(50):
+        for _ in range(5):
             liste_carte.append(CarteMalus())
         for _ in range(15):
             liste_carte.append(CarteChance())
