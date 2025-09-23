@@ -93,6 +93,21 @@ class Joueur:
         """Affiche le score actuel du joueur."""
         print(f'Score actuel de {self.nom} : {self.score}')
 
+
+class Tricheur(Joueur):
+    """Joueur spécial qui ne subit pas les cartes Malus."""
+
+    def jouer_carte(self, carte):
+        """
+        Applique l'effet d'une carte.
+        Si c'est un Malus, le joueur ne perd pas de points.
+        """
+        if isinstance(carte, CarteMalus):
+            effet = "Carte Malus ignorée (tricheur)"
+            print(f'{self.nom} pioche {carte.__class__.__name__} -> {effet}')
+        else:
+            super().jouer_carte(carte)  # Joueur normal pour toutes les autres cartes
+
 # ---------- Fonction pour piocher ----------
 def piocher(liste_carte, joueur):
     """
@@ -113,7 +128,7 @@ if __name__ == "__main__":
     liste_cartes = []
 
     # Création des joueurs
-    joueurs = [Joueur("Léo"), Joueur("Nico")]
+    joueurs = [Joueur("Léo"), Tricheur("Nico")]
 
     # Initialisation et mélange des cartes
     Cartes.initialise_et_melange_liste(liste_cartes)
