@@ -15,7 +15,11 @@ class CarteNormale(Cartes):
         joueur.ajouter_score(points)
         return f'Carte normale + {points} points'
 
+<<<<<<< HEAD
 class CarteBonus(Cartes): #regle
+=======
+class Cartebonus(Cartes):
+>>>>>>> 80c5e57 (V1)
 
     def valeur(self, joueur):
         joueur.ajouter_score(joueur.score)
@@ -38,4 +42,14 @@ class CarteChance(Cartes):
         return f'Carte Chance + {points} points'
 
 
-class Joueur
+class Joueur:
+    def __init__(self, nom, score=0):
+        self.nom=nom
+        self.score=score
+
+    def ajouter_score(self, points):
+        self.score += points
+
+    def affichage(self):
+        printf(f'score actuel du {joueur.nom} : {joueur.score}')
+
