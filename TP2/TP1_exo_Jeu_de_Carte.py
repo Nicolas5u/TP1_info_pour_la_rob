@@ -4,7 +4,9 @@ import random
 
 class Cartes(ABC):
     @abstractmethod
-   
+    def valeur(self, joueur):
+        pass
+
     def initialise_et_melange_liste(liste_carte):
 
         for i in range(30):
@@ -22,12 +24,6 @@ class Cartes(ABC):
         random.shuffle(liste_carte) # Mélanger l'ordre des cartes
 
         return liste_carte
-    
-def piocher(liste_carte, joueur):
-    carte_sortie = liste_carte.pop(0)
-    print(f' {carte_sortie}')
-    effet=carte_sortie.valeur(joueur)
-    return carte_sortie
 
 
 class CarteNormale(Cartes):
@@ -41,6 +37,7 @@ class CarteNormale(Cartes):
 class CarteBonus(Cartes): #regle
     
     def valeur(self, joueur):
+        points=joueur.score
         joueur.ajouter_score(joueur.score)
         return f'Carte Bonus+ {points} points'
 
@@ -70,7 +67,13 @@ class Joueur:
         self.score += points
 
     def affichage(self):
-        print(f'score actuel du {joueur.nom} : {joueur.score}')
+        print(f'score actuel du {self.nom} : {self.score}')
+
+def piocher(liste_carte, joueur):
+    carte_sortie = liste_carte.pop(0)
+    effet=carte_sortie.valeur(joueur)
+    print(f'{joueur.nom} pioche {carte_sortie.__class__.__name__} -> {effet}')
+
 
 
 
@@ -89,5 +92,5 @@ if __name__=="__main__":
         print(f'tour numéro {i}')
         for joueur in joueurs:
             piocher(Cartes.liste_carte, joueur)
-            print(f'joueur {joueur.nom} : {joueur.score}')
+            joueur.affichage()
         
