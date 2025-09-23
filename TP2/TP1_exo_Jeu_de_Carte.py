@@ -3,24 +3,24 @@ import random
 
 # ---------- Classe abstraite des cartes ----------
 class Cartes(ABC):
-    """Classe abstraite représentant une carte du jeu."""
+    """Classe abstraite représentant une carte du jeu"""
 
     @abstractmethod
     def valeur(self, joueur):
-        """Applique l'effet de la carte sur le joueur."""
+        """Applique l'effet de la carte sur le joueur"""
         pass
 
     @staticmethod
-    def initialise_et_melange_liste(liste_carte):
+    def initialise_et_melange_liste(liste_carte) -> 'liste_carte':
         """
         Remplit la liste avec des cartes normales, bonus, malus et chance,
-        puis mélange les cartes.
+        puis mélange les cartes
         """
         for _ in range(30):
             liste_carte.append(CarteNormale())
         for _ in range(6):
             liste_carte.append(CarteBonus())
-        for _ in range(5):
+        for _ in range(50):
             liste_carte.append(CarteMalus())
         for _ in range(15):
             liste_carte.append(CarteChance())
@@ -30,7 +30,7 @@ class Cartes(ABC):
 
 # ---------- Types de cartes ----------
 class CarteNormale(Cartes):
-    """Carte normale : ajoute un nombre aléatoire de points au joueur."""
+    """Carte normale : ajoute un nombre aléatoire de points au joueur"""
 
     def valeur(self, joueur):
         points = random.randint(1, 10)
@@ -38,7 +38,7 @@ class CarteNormale(Cartes):
         return f'Carte normale + {points} points'
 
 class CarteBonus(Cartes):
-    """Carte bonus : double le score actuel du joueur."""
+    """Carte bonus : double le score actuel du joueur"""
 
     def valeur(self, joueur):
         points = joueur.score
@@ -46,7 +46,7 @@ class CarteBonus(Cartes):
         return f'Carte Bonus + {points} points'
 
 class CarteMalus(Cartes):
-    """Carte malus : retire 5 points au joueur."""
+    """Carte malus : retire 5 points au joueur"""
 
     def valeur(self, joueur):
         points = -5
@@ -54,7 +54,7 @@ class CarteMalus(Cartes):
         return f'Carte Malus {points} points'
 
 class CarteChance(Cartes):
-    """Carte chance : ajoute ou retire un nombre aléatoire de points."""
+    """Carte chance : ajoute ou retire un nombre aléatoire de points"""
 
     def valeur(self, joueur):
         points = random.randint(-5, 15)
@@ -63,11 +63,11 @@ class CarteChance(Cartes):
 
 # ---------- Classe Joueur ----------
 class Joueur:
-    """Représente un joueur avec un nom et un score."""
+    """Représente un joueur avec un nom et un score"""
 
     def __init__(self, nom, score=0):
         """
-        Initialise un joueur.
+        Initialise un joueur
         :param nom: nom du joueur
         :param score: score initial (par défaut 0)
         """
@@ -76,31 +76,31 @@ class Joueur:
 
     def ajouter_score(self, points):
         """
-        Ajoute des points au score du joueur.
-        :param points: nombre de points à ajouter
+        Ajoute des points au score du joueur
+        param points: nombre de points à ajouter
         """
         self.score += points
 
     def jouer_carte(self, carte):
         """
-        Applique l'effet d'une carte tirée.
+        Applique l'effet d'une carte tirée
         :param carte: instance de Carte
         """
         effet = carte.valeur(self)
         print(f'{self.nom} pioche {carte.__class__.__name__} -> {effet}')
 
     def affichage(self):
-        """Affiche le score actuel du joueur."""
+        """Affiche le score actuel du joueur"""
         print(f'Score actuel de {self.nom} : {self.score}')
 
 
 class Tricheur(Joueur):
-    """Joueur spécial qui ne subit pas les cartes Malus."""
+    """Joueur spécial qui ne subit pas les cartes Malus"""
 
     def jouer_carte(self, carte):
         """
-        Applique l'effet d'une carte.
-        Si c'est un Malus, le joueur ne perd pas de points.
+        Applique l'effet d'une carte
+        Si c'est un Malus, le joueur ne perd pas de points
         """
         if isinstance(carte, CarteMalus):
             effet = "Carte Malus ignorée (tricheur)"
@@ -111,7 +111,7 @@ class Tricheur(Joueur):
 # ---------- Fonction pour piocher ----------
 def piocher(liste_carte, joueur):
     """
-    Le joueur pioche la première carte de la liste et applique son effet.
+    Le joueur pioche la première carte de la liste et applique son effet
     :param liste_carte: liste de cartes
     :param joueur: instance de Joueur
     """
