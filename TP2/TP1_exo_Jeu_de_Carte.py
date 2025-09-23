@@ -1,96 +1,44 @@
-from abc import ABC, abstractmethod
-import random
+import TP_exo1
+import math
+
+class Position:
+    # Entrées : x, y (int ou float, par défaut 0)
+    # Rôle : Représente une position dans un plan avec coordonnées (x, y)
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
+
+    # Entrées : autrecoord (Position)
+    # Sortie : (Position) nouvelle position
+    # Rôle : Définit l’addition entre deux positions (somme des coordonnées)
+    def __add__(self, autrecoord):
+        return Position(self.x + autrecoord.x, self.y + autrecoord.y)  # on ajoute aux coordonnées de 'self' celles d'un autre point
+
+    # Sortie : None
+    # Rôle : Affiche les coordonnées de la position au format (x, y)
+    def afficher(self):
+        print(f'les coord sont (x={self.x} ,y={self.y})')
+
+    # Entrées : autre (Position)
+    # Sortie : (float) distance euclidienne
+    # Rôle : Calcule et affiche la distance euclidienne entre deux positions
+    def distance_vers(self, autre):
+        dx = autre.x - self.x
+        dy = autre.y - self.y
+        d = math.sqrt(dx**2 + dy**2)
+        print(f'la distance est: {d}')
+        return d
 
 
-class Cartes(ABC):
-    @abstractmethod
-    def valeur(self, joueur):
-        pass
+# Tests
+pos1 = Position(1, 1)
+pos1.afficher()  # les coord sont (x=1 ,y=1)
 
-    def initialise_et_melange_liste(liste_carte):
+pos2 = Position(4, 5)
+pos2.afficher()  # les coord sont (x=4 ,y=5)
 
-        for i in range(30):
-            liste_carte.append(CarteNormale())
+pos3 = pos1 + pos2
+pos3.afficher()  # les coord sont (x=5 ,y=6)
 
-        for i in range(6):
-            liste_carte.append(CarteBonus())
+assert pos1.distance_vers(pos2) == 5.0
 
-        for i in range(5):
-            liste_carte.append(CarteMalus())
-
-        for i in range(15):
-            liste_carte.append(CarteChance())
-        
-        random.shuffle(liste_carte) # Mélanger l'ordre des cartes
-
-        return liste_carte
-
-
-class CarteNormale(Cartes):
-    
-    def valeur(self, joueur):
-        points = random.randint(1, 10)
-        joueur.ajouter_score(points)
-        return f'Carte normale + {points} points'
-
-
-class CarteBonus(Cartes): #regle
-    
-    def valeur(self, joueur):
-        points=joueur.score
-        joueur.ajouter_score(joueur.score)
-        return f'Carte Bonus+ {points} points'
-
-
-class CarteMalus(Cartes):
-    
-    def valeur(self, joueur):
-        points =-5
-        joueur.ajouter_score(points)
-        return f'Carte malus {points} points'
-
-
-class CarteChance(Cartes):
-    
-    def valeur(self, joueur):
-        points=random.randint(-5, 15)
-        joueur.ajouter_score(points)
-        return f'Carte Chance + {points} points'
-
-
-class Joueur:
-    def __init__(self, nom, score=0):
-        self.nom=nom
-        self.score=score
-
-    def ajouter_score(self, points):
-        self.score += points
-
-    def affichage(self):
-        print(f'score actuel du {self.nom} : {self.score}')
-
-def piocher(liste_carte, joueur):
-    carte_sortie = liste_carte.pop(0)
-    effet=carte_sortie.valeur(joueur)
-    print(f'{joueur.nom} pioche {carte_sortie.__class__.__name__} -> {effet}')
-
-
-
-
-if __name__=="__main__":
-
-    Cartes.liste_carte=[]
-    joueurs=[Joueur("léo"), Joueur("Nico")]
-    joueur_actif = 0
-    
-    Cartes.initialise_et_melange_liste(Cartes.liste_carte)
-    
-    #nb_tours=input('Combien de tours ?')
-    nb_tours=5
-
-    for i in range (1, nb_tours+1):
-        print(f'tour numéro {i}')
-        for joueur in joueurs:
-            piocher(Cartes.liste_carte, joueur)
-            joueur.affichage()
-        
