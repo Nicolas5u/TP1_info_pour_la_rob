@@ -3,6 +3,8 @@ import random
 
 
 class Cartes(ABC):
+    def appliquer(self, joueur):
+        pass
 
 
 
@@ -15,11 +17,8 @@ class CarteNormale(Cartes):
         joueur.ajouter_score(points)
         return f'Carte normale + {points} points'
 
-<<<<<<< HEAD
-class CarteBonus(Cartes): #regle
-=======
+
 class Cartebonus(Cartes):
->>>>>>> 80c5e57 (V1)
 
     def valeur(self, joueur):
         joueur.ajouter_score(joueur.score)
@@ -51,5 +50,20 @@ class Joueur:
         self.score += points
 
     def affichage(self):
-        printf(f'score actuel du {joueur.nom} : {joueur.score}')
+        print(f'score actuel du {joueur.nom} : {joueur.score}')
 
+
+
+if __name__='main':
+
+    j1=Joueur("j1")
+    j2=Joueur("j2")
+    int nb_tours
+    #nb_tours=input('Combien de tours ?')
+    nb_tours=5
+
+    for i in range (0, nb_tours):
+        print(f'tour numéro {i}')
+        for joueur in Joueur:
+            piocher(deck, joueur)
+            print(f'joueur {Joueur.nom} : {Joueur.score}')
